@@ -8,7 +8,7 @@ import socket
 
 # Initialising UDP port and ip
 
-UDP_IP = "127.0.1.1"
+UDP_IP = "localhost"
 UDP_PORT = 9999
 UDP_PORT2 = 6666
 
@@ -227,7 +227,7 @@ def main_loop():
             "R1": R1,
             "L1": L1,
             "dpady": dpady,
-            "dpadx": dpadx,
+            "dpadx": -dpadx,
             "x": x,
             "square": square,
             "circle": circle,
