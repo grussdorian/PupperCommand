@@ -227,7 +227,7 @@ def main_loop():
             "R1": R1,
             "L1": L1,
             "dpady": dpady,
-            "dpadx": -dpadx,
+            "dpadx": dpadx,
             "x": x,
             "square": square,
             "circle": circle,
@@ -375,30 +375,30 @@ def main_loop2():
                     axis_states[axis] = fvalue
                     # print("%s: %.3f" % (axis, fvalue))
                     if axis == "y":
-                        left_y = fvalue
-                        print("woah left_y: %.3f" % (fvalue))
+                        left_y = -fvalue
+                        print("woah left_y: %.3f" % (left_y))
                     if axis == "x":
                         left_x = fvalue
-                        print("woah left_x: %.3f" % (fvalue))
+                        print("woah left_x: %.3f" % (left_x))
                     if axis == "ry":
-                        right_y = fvalue
-                        print("woah right_y: %.3f" % (fvalue))
+                        right_y = -fvalue
+                        print("woah right_y: %.3f" % (right_y))
                     if axis == "rx":
                         right_x = fvalue
-                        print("woah right_x: %.3f" % (fvalue))
+                        print("woah right_x: %.3f" % (right_x))
 
                     if axis == "z":
                         L2 = fvalue
-                        print("woah LT: %.3f" % (fvalue))
+                        print("woah LT: %.3f" % (L2))
                     if axis== "rz":
                         R2 = fvalue
-                        print("woah RT: %.3f" % (fvalue))
+                        print("woah RT: %.3f" % (R2))
                     if axis == "hat0x":
                         dpadx = fvalue
-                        print("woah dpadx: %.3f" % (fvalue))
+                        print("woah dpadx: %.3f" % (dpadx))
                     if axis == "hat0y":
                         dpady = fvalue
-                        print("woah dpady: %.3f" % (fvalue))
+                        print("woah dpady: %.3f" % (dpady))
                     # sock.sendto(dummy_msg, (UDP_IP, UDP_PORT))
 
             controller_dataframe = {
