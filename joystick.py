@@ -8,16 +8,13 @@ import socket
 
 # Initialising UDP port and ip
 
-UDP_IP = "localhost"
+UDP_IP = "192.168.0.183"
 UDP_PORT = 9999
 UDP_PORT2 = 6666
 
 # Initialising the socket object
 
 sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) 
-
-
-
 
 
 dummy_msg = pickle.dumps({
@@ -299,34 +296,34 @@ def main_loop2():
                         ######################################
 
                         if button == "a":
-                            print("woah x")
+                            print("[DEBUG]  x")
                             x = 1
                         if button == "b":
-                            print("woah circle")
+                            print("[DEBUG]  circle")
                             circle = 1
                         if button == "x":
-                            print("woah square")
+                            print("[DEBUG]  square")
                             square = 1
                         if button == "y":
-                            print("woah triangle")
+                            print("[DEBUG]  triangle")
                             triangle = 1
                         if button == "tr":
-                            print("woah tr")
+                            print("[DEBUG]  tr")
                             R1 = 1
                         if button == "tl":
-                            print("woah tl")
+                            print("[DEBUG]  tl")
                             L1 = 1
 
                         if button == "select":
-                            print("woah select")
+                            print("[DEBUG]  select")
                         if button == "start":
-                            print("woah start")
+                            print("[DEBUG]  start")
                         if button == "thumbl":
-                            print("woah thumbl")
+                            print("[DEBUG]  thumbl")
                         if button == "thumbr":
-                            print("woah thumbr")
+                            print("[DEBUG]  thumbr")
                         if button == "mode":
-                            print("woah mode")
+                            print("[DEBUG]  mode")
                         
 
                         ######################################
@@ -337,34 +334,34 @@ def main_loop2():
                         print("%s released" % (button))
 
                         if button == "a":
-                            print("woah x")
+                            print("[DEBUG]  x")
                             x = 0
                         if button == "b":
-                            print("woah circle")
+                            print("[DEBUG]  circle")
                             circle = 0
                         if button == "x":
-                            print("woah square")
+                            print("[DEBUG]  square")
                             square = 0
                         if button == "y":
-                            print("woah triangle")
+                            print("[DEBUG]  triangle")
                             triangle = 0
                         if button == "tr":
-                            print("woah tr")
+                            print("[DEBUG]  tr")
                             R1 = 0
                         if button == "tl":
-                            print("woah tl")
+                            print("[DEBUG]  tl")
                             L1 = 0
                             
                         if button == "select":
-                            print("woah select")
+                            print("[DEBUG]  select")
                         if button == "start":
-                            print("woah start")
+                            print("[DEBUG]  start")
                         if button == "thumbl":
-                            print("woah thumbl")
+                            print("[DEBUG]  thumbl")
                         if button == "thumbr":
-                            print("woah thumbr")
+                            print("[DEBUG]  thumbr")
                         if button == "mode":
-                            print("woah mode")
+                            print("[DEBUG]  mode")
                         # joystick_pub.send({"button":button})
                         # sock.sendto(dummy_msg, (UDP_IP, UDP_PORT))
 
@@ -372,33 +369,33 @@ def main_loop2():
                 axis = axis_map[number]
                 if axis:
                     fvalue = value / 32767.0
-                    axis_states[axis] = fvalue
+                    # axis_states[axis] = fvalue
                     # print("%s: %.3f" % (axis, fvalue))
                     if axis == "y":
                         left_y = -fvalue
-                        print("woah left_y: %.3f" % (left_y))
+                        print("[DEBUG]  left_y: %.3f" % (left_y))
                     if axis == "x":
                         left_x = fvalue
-                        print("woah left_x: %.3f" % (left_x))
+                        print("[DEBUG]  left_x: %.3f" % (left_x))
                     if axis == "ry":
                         right_y = -fvalue
-                        print("woah right_y: %.3f" % (right_y))
+                        print("[DEBUG]  right_y: %.3f" % (right_y))
                     if axis == "rx":
                         right_x = fvalue
-                        print("woah right_x: %.3f" % (right_x))
+                        print("[DEBUG]  right_x: %.3f" % (right_x))
 
                     if axis == "z":
                         L2 = fvalue
-                        print("woah LT: %.3f" % (L2))
+                        print("[DEBUG]  LT: %.3f" % (L2))
                     if axis== "rz":
                         R2 = fvalue
-                        print("woah RT: %.3f" % (R2))
+                        print("[DEBUG]  RT: %.3f" % (R2))
                     if axis == "hat0x":
                         dpadx = fvalue
-                        print("woah dpadx: %.3f" % (dpadx))
+                        print("[DEBUG]  dpadx: %.3f" % (dpadx))
                     if axis == "hat0y":
                         dpady = fvalue
-                        print("woah dpady: %.3f" % (dpady))
+                        print("[DEBUG]  dpady: %.3f" % (dpady))
                     # sock.sendto(dummy_msg, (UDP_IP, UDP_PORT))
 
             controller_dataframe = {
@@ -418,6 +415,16 @@ def main_loop2():
                 "triangle": triangle,
                 "message_rate": MESSAGE_RATE
             }
+            # No floating point operation is performed
+            if (controller_dataframe["ly"] < 0.01 or controller_dataframe["ly"] > -0.01):
+                controller_dataframe["ly"] = 0
+            if (controller_dataframe["lx"] < 0.01 or controller_dataframe["lx"] > -0.01):
+                controller_dataframe["lx"] = 0
+
+            if (controller_dataframe["ry"] < 0.01 or controller_dataframe["ry"] > -0.01):
+                controller_dataframe["ry"] = 0
+            if (controller_dataframe["rx"] < 0.01 or controller_dataframe["rx"] > -0.01):
+                controller_dataframe["rx"] = 0 
             controller_dataframe = pickle.dumps(controller_dataframe)
             sock.sendto(controller_dataframe, (UDP_IP, UDP_PORT))
             sock.sendto(controller_dataframe, (UDP_IP, UDP_PORT2))
