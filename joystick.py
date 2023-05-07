@@ -415,7 +415,7 @@ def main_loop2():
                 "triangle": triangle,
                 "message_rate": MESSAGE_RATE
             }
-            # No floating point operation is performed
+            # No floating point operation is performed deadzone checking
             if (controller_dataframe["ly"] < 0.01 or controller_dataframe["ly"] > -0.01):
                 controller_dataframe["ly"] = 0
             if (controller_dataframe["lx"] < 0.01 or controller_dataframe["lx"] > -0.01):
